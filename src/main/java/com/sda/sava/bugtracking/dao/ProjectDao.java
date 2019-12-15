@@ -1,52 +1,50 @@
 package com.sda.sava.bugtracking.dao;
 
 import com.sda.sava.bugtracking.hibernateUtils.HibernateUtil;
-import com.sda.sava.bugtracking.model.User;
-
+import com.sda.sava.bugtracking.model.Project;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-public class UserDao {
-    public User getUserById(int userId) {
+public class ProjectDao {
+    public Project getProjectById(int projectId) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        User user = session.get(User.class, userId);
+        Project project = session.get(Project.class, projectId);
         transaction.commit();
         session.close();
-        return user;
+        return project;
     }
 
-    public User save(User user) {
+    public Project save(Project project) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("from User where email = ?1");
-        query.setParameter(1, user.getEmail());
+        Query query = session.createQuery("from Project where project = ?1");
+        query.setParameter(1, project.getProjectName());
         query.list();
         if (query.list().size() == 0) {
-            session.saveOrUpdate(user);
+            session.saveOrUpdate(project);
         }
         transaction.commit();
         session.close();
-        return user;
+        return project;
     }
-
-    public void delete(User users) {
+    public void deleteProject(Project project){
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        session.delete(users);
+        session.delete(project);
         transaction.commit();
         session.close();
     }
-
-    public static void deleteAllUsers() {
+    public void deleteAllProjects(){
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Query query = session.createQuery("delete from User");
+        Query query = session.createQuery("delete from Project");
         query.executeUpdate();
         transaction.commit();
         session.close();
     }
 
-
 }
+
+
