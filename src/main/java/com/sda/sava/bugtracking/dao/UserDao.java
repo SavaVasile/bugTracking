@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.List;
+
 public class UserDao {
     public User getUserById(int userId) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -15,6 +17,22 @@ public class UserDao {
         transaction.commit();
         session.close();
         return user;
+    }
+
+    public List<User> getAllUsers() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from User");
+        List<User> usersList = query.list();
+        session.close();
+        return usersList;
+    }
+
+    public void printAllUsers() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("from User");
+        List<User> printUsers = query.list();
+        System.out.println(printUsers);
+        session.close();
     }
 
     public User save(User user) {
@@ -39,7 +57,7 @@ public class UserDao {
         session.close();
     }
 
-    public static void deleteAllUsers() {
+    public void deleteAllUsers() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         Query query = session.createQuery("delete from User");
