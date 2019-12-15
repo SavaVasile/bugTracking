@@ -2,14 +2,21 @@ package com.sda.sava.bugtracking;
 
 import com.sda.sava.bugtracking.dao.UserDao;
 import com.sda.sava.bugtracking.model.User;
+import com.sda.sava.bugtracking.service.UsersDisplayService;
+import com.sda.sava.bugtracking.view.BugsTrackingView;
 
-public class Application {
+
+
+public class Application extends BugsTrackingView {
     public static void main(String[] args) {
-        UserDao userDao = new UserDao();
-        User user3 = new User("John","email@gmail.com","developer");
-        userDao.save(user3);
-        System.out.println(userDao.getUserById(2));
-        //userDao.delete(user2);
-    }
+        launch();
+        /*UserDao userDao = new UserDao();
+        User user = new User("John", "email@gmail.com", "developer");
+        //userDao.save(user);
+        //userDao.deleteAllUsers();
+        UsersDisplayService u = new UsersDisplayService();
+        u.printAllUsers();
+*/
 
+    }
 }
