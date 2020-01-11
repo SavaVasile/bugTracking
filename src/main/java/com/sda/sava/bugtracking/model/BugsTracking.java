@@ -3,6 +3,7 @@ package com.sda.sava.bugtracking.model;
 import org.omg.PortableInterceptor.ACTIVE;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -13,12 +14,12 @@ public class BugsTracking {
     @Column(name = "bugsTrackingId")
     private int bugsTrackingId;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "userId",nullable = false)
     private User users;
 
-    @ManyToOne
-    @JoinColumn(name = "projectsId",nullable = false)
+    @ManyToOne()
+    @JoinColumn(name = "projectId",nullable = false)
     private Project projects;
 
     @Column(name = "bugName")
@@ -28,10 +29,10 @@ public class BugsTracking {
     private String bugDescription;
 
     @Column(name = "entryDate")
-    private Date entryDate;
+    private LocalDate entryDate;
 
     @Column(name = "dueDate")
-    private Date dueDate;
+    private LocalDate dueDate;
 
     @Column(name = "priority")
     @Enumerated(EnumType.STRING)
@@ -44,9 +45,15 @@ public class BugsTracking {
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private StatusEnum statusEnum;
-
-
-
+    public BugsTracking(){}
+    public BugsTracking(String bugName,String bugDescription,LocalDate entryDate,LocalDate dueDate, PriorityEnum priorityEnum,SeverityEnum severityEnum){
+        this.bugName = bugName;
+        this.bugDescription = bugDescription;
+        this.entryDate = entryDate;
+        this.dueDate = dueDate;
+        this.priorityEnum = priorityEnum;
+        this.severityEnum = severityEnum;
+    }
     public PriorityEnum getPriorityEnum(){
         return priorityEnum;
     }
@@ -107,19 +114,19 @@ public class BugsTracking {
         this.bugDescription = bugDescription;
     }
 
-    public Date getEntryDate() {
+    public LocalDate getEntryDate() {
         return entryDate;
     }
 
-    public void setEntryDate(Date entryDate) {
+    public void setEntryDate(LocalDate entryDate) {
         this.entryDate = entryDate;
     }
 
-    public Date getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -143,8 +150,8 @@ public class BugsTracking {
         this.userWorkingOnBug = userWorkingOnBug;
     }
 
-    @Override
-    public String toString() {
+    //@Override
+    /*public String toString() {
         return "BugsTracking{" +
                 "bugsTrackingId=" + bugsTrackingId +
                 ", users=" + users +
@@ -158,5 +165,10 @@ public class BugsTracking {
                 ", statusEnum=" + statusEnum +
                 ", userWorkingOnBug='" + userWorkingOnBug + '\'' +
                 '}';
+    }*/
+    @Override
+    public String toString(){
+        return "User : "+users +", Project : "+projects+", Bug : "+bugName+", Bug Description : "+bugDescription+", Entry Date : "+ entryDate+
+                ", Due Date : " + ", Priority : "+ priorityEnum + ", Severity : "+ severityEnum+", Status : "+statusEnum+".";
     }
 }

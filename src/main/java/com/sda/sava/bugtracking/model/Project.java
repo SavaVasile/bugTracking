@@ -11,13 +11,20 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "projectId")
     private int projectId;
-    @Column(name = "projectName")
+    @Column(name = "projectName",unique = true)
     private String projectName;
     @Column(name = "ProjectDescription")
     private String projectDescription;
 
-    @OneToMany(mappedBy = "projects")
-    List<BugsTracking>projectsList = new ArrayList<>();
+    @OneToMany(cascade =CascadeType.ALL, mappedBy = "projects")
+    List<BugsTracking> bugsTrackingList = new ArrayList<>();
+
+    public Project() { }
+
+    public Project(String projectName, String projectDescription) {
+        this.projectName = projectName;
+        this.projectDescription = projectDescription;
+    }
 
     public int getProjectId() {
         return projectId;
@@ -44,11 +51,11 @@ public class Project {
     }
 
     public List<BugsTracking> getProjectsList() {
-        return projectsList;
+        return bugsTrackingList;
     }
 
     public void setProjectsList(List<BugsTracking> projectsList) {
-        this.projectsList = projectsList;
+        this.bugsTrackingList = projectsList;
     }
 
     @Override

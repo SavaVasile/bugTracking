@@ -49,6 +49,17 @@ public class UserDao {
         return user;
     }
 
+    public static User getUserByEmail(User user){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query query = session.createQuery("from User where email = ?1");
+        query.setParameter(1, user.getEmail());
+        User savedUser = (User) query.list().get(0);
+        transaction.commit();
+        session.close();
+        return savedUser;
+    }
+
     public void delete(User users) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();

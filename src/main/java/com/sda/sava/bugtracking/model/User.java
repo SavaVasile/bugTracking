@@ -17,11 +17,9 @@ public class User {
     @Column(name = "ocupation")
     private String ocupation;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "users")
     List<BugsTracking> usersList = new ArrayList<>();
-    public User(){
-
-    }
+    public User(){ }
 
     public User(String userName, String email, String ocupation) {
         this.userName = userName;
